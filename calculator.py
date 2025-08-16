@@ -18,18 +18,22 @@ class IntCalculator:
 
     def add(self, a: int, b: int) -> int:
         """Add two integer numbers."""
-        return a + b
+        with tracer.start_as_current_span("add-span"):
+            return a + b
 
     def subtract(self, a: int, b: int) -> int:
         """Subtract two integer numbers."""
-        return a - b
+        with tracer.start_as_current_span("subtract-span"):
+            return a - b
 
     def multiply(self, a: int, b: int) -> int:
         """Multiply two integer numbers."""
-        return a * b
+        with tracer.start_as_current_span("multiply-span"):
+            return a * b
 
 
 with tracer.start_as_current_span("calculator-span"):
+    print("Calculator span started!....")
     calculator = IntCalculator()
     a = 2
     b = 3
@@ -37,3 +41,5 @@ with tracer.start_as_current_span("calculator-span"):
     print(f"Sum of {a} and {b} is {calculator.add(a, b)}")
     print(f"Difference of {a} and {b} is {calculator.subtract(a, b)}")
     print(f"Product of {a} and {b} is {calculator.multiply(a, b)}")
+
+    print(".... Calculator span ended!")
